@@ -64,3 +64,13 @@ class OrderItem(models.Model):
         if not self.price_at_order:
             self.price_at_order = self.product.price
         super().save(*args, **kwargs)
+        
+class Customer(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=20, blank=True, null=True, validators=[validate_phone_format])
+    created_at = models.DateTimeField(auto_now_add=True) # Add this field
+
+    def __str__(self):
+        return self.name        
