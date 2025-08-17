@@ -1,12 +1,13 @@
 import graphene
+from crm.schema import Query as CRMQuery, Mutation as CRMMutation
 
-# 1. Define a Query class that inherits from graphene.ObjectType
-class Query(graphene.ObjectType):
-    """
-    Defines the root fields for GraphQL queries.
-    """
-    # 2. Define the 'hello' field as a String type.
-    hello = graphene.String(default_value="Hello, GraphQL!")
+# Inherit queries from the crm app's schema
+class Query(CRMQuery, graphene.ObjectType):
+    pass
 
-# 3. Create a schema instance and point it to our Query class.
-schema = graphene.Schema(query=Query)
+# Inherit mutations from the crm app's schema
+class Mutation(CRMMutation, graphene.ObjectType):
+    pass
+
+# Create the final schema, enabling both queries and mutations
+schema = graphene.Schema(query=Query, mutation=Mutation)
